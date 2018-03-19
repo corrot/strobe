@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="strobeApp">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>VJ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- lib -->
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/lib/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/lib/fa-regular.min.css" />
+    <!-- app -->
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/app/main.css" />
+</head>
+
+<body ng-controller="strobeController">
+    <nav class="navbar navbar-light bg-primary">
+        <a class="navbar-brand" href="#">
+            <!-- <img src="/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">  -->
+            <strong>Strobe</strong>
+        </a>
+        <form class="form-inline">
+            <button class="btn btn-dark mr-sm-2" type="submit">Pause All <i class="fas fa-pause"></i></button>
+            <button class="btn btn-danger mr-sm-0" type="submit">Stop All <i class="fas fa-stop"></i></button>
+        </form>
+    </nav>
+
+    <div class="body-content">
+        <div class="container-fluid">
+            <div class="scene" ng-repeat="scene in scenes">
+                <div class="scene-label" ng-click="toggleScene(scene)" ng-class="{'active': scene.isActive}">
+                    <div class="solo-toggler" ng-click="toggleSolo(scene); $event.stopPropagation()" ng-class="{'active': scene.isSolo}">S</div>
+                    <div class="scene-title"><span ng-bind="scene.title"></span></div>
+                    <div class="scene-indicator"></div>
+                </div>
+                <div class="scene-timeline">should be timeline</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- lib -->
+    <script src="scripts/lib/jquery-3.3.1.min.js"></script>
+    <script src="scripts/lib/angular.min.js"></script>
+    <script src="scripts/lib/bootstrap.min.js"></script>
+    <!-- app -->
+    <script src="scripts/app/main.js"></script>
+</body>
+
+</html>

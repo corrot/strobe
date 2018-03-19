@@ -1,0 +1,79 @@
+body {
+    background-color: #333;
+    color: #ddd;
+    padding: 0;
+    margin: 0;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+.scene {
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid #404040;
+}
+
+.scene:nth-child(2n) {
+    background: rgba(255, 255, 255, .05);
+}
+
+.scene-label {
+    width: 160px;
+    padding: 20px 40px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, .1);
+    position: relative;
+}
+
+.solo-toggler {
+    padding: 20px;
+    position: absolute;
+    height: 100%;
+    border-right: 1px solid #555;
+    left: 0;
+    top: 0;
+    font-weight: bold;
+    color: #222;
+    text-shadow: 0 0 3px;
+}
+
+.solo-toggler.active {
+    text-shadow: 0 0 1px #333;
+    text-shadow: 0 0 5px rgb(51, 255, 0);
+    color: rgb(51, 255, 0);
+}
+
+.scene-title {
+    margin-left: 20px;
+}
+
+.scene-label.active {
+    color: #fff;
+}
+
+.scene-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid #333;
+    background: #444;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 0 3px 0 #aaa;
+}
+
+.scene-label.active>.scene-indicator {
+    border: 1px solid rgb(20, 99, 0);
+    box-shadow: 0 0 5px 0 rgb(51, 255, 0);
+    background: rgb(51, 255, 0);
+}
+
+.scene-timeline {
+    width: calc( 100% - 160px);
+    padding: 20px 40px;
+    background: rgba(255, 255, 255, .05);
+}
