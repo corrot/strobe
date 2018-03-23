@@ -25,7 +25,7 @@
             <!-- <button class="btn btn-success mr-sm-2" type="submit" ng-disabled="selectedBar.loopIndex == undefined" ng-click="addAction()">Add <i class="fas fa-add"></i></button>
             <input class="form-control action-control mr-sm-2" type="number" placeholder="start" max="{{selectedAction.end}}" ng-model="selectedAction.start">
             <input class="form-control action-control mr-sm-2" type="number" placeholder="end" min="{{selectedAction.start}}" ng-model="selectedAction.end"> -->
-            <button type="button" class="btn btn-primary mr-sm-2" data-toggle="modal" data-target="#codeModal">
+            <button type="button" class="btn btn-primary mr-sm-2" data-toggle="modal" data-target="#codeModal" ng-click="submit">
                 Code
             </button>
             <!-- <button class="btn btn-dark mr-sm-2" type="submit" ng-click="removeAction()" ng-disabled="!selectedAction.end">Remove
@@ -64,7 +64,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Send code to execute</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">code</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -73,7 +73,7 @@
                     <form>
                         <div class="form-group">
                             <label for="message-text" class="col-form-label">Data:</label>
-                            <textarea class="form-control" rows="10" id="message-text" ng-model="dataToSend"></textarea>
+                            <textarea class="form-control" rows="10" id="message-text" ng-model="code"></textarea>
                         </div>
                     </form>
                 </div>

@@ -12,7 +12,7 @@ strobeApp.controller('loopsController', ['$scope', function($scope) {
     $scope.loops = loops;
     $scope.barCount = barCount;
     $scope.selectedAction = {};
-    $scope.dataToSend = 'data to send to execute';
+    $scope.code = "";
 
     $scope.selectAction = function(o, i) {
         if ($scope.selectedAction == o && $scope.selectedAction.loopIndex == i) {
@@ -65,17 +65,34 @@ strobeApp.controller('loopsController', ['$scope', function($scope) {
         $scope.loops[i].splice(j, 1);
     }
 
-    $scope.test = function() {
-        console.log('resized!');
-    }
+    $('#codeModal').on('show.bs.modal', function(){
+        $scope.submit();
+    });
+    
+    $scope.submit = function(){
+        var text = "";
+        var arr = [];
+        $scope.loops.forEach((loop,i)=>{
+            loop.forEach((c)=>{
+                arr.push({i:i, t:c.start, s:1});
+                arr.push({i:i, t:c.end, s:0});
+            });
+        });
 
-    // $scope.loops.forEach((l) => {
-    //     for (let index = 0; index < barCount; index++) {
-    //         if(Math.random()>.8){
-    //             $scope.addAction($scope.loops.indexOf(l), index, index + 1)
-    //         }        
-    //     }
-    // });
+        for (var i = 0; i < $scope.barCount; i++) {
+            var bitsOnBar = arr.filter(a=> a.t == i);
+            if(bitsOnBar.length > 0){
+                text += text.length > 0 ? '|' : '';
+                text += i + ':';
+                bitsOnBar.forEach((b) => {
+                    text += (text[text.length - 1] != ':' ? ',' : '') + b.i + '-' + b.s; 
+                });
+            }
+        }
+
+        $scope.code = text;
+        $scope.$apply();
+    }
 
     document.body.onmousedown = function() {
         $scope.isMouseClicked = true;
