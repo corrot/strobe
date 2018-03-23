@@ -22,18 +22,32 @@
         </a>
         <form class="form-inline">
             <input class="form-control action-control mr-sm-2" type="number" placeholder="bars" min="0" ng-model="barCount">
-            <button class="btn btn-success mr-sm-2" type="submit" ng-disabled="selectedBar.loopIndex == undefined" ng-click="addAction()">Add <i class="fas fa-add"></i></button>
+            <!-- <button class="btn btn-success mr-sm-2" type="submit" ng-disabled="selectedBar.loopIndex == undefined" ng-click="addAction()">Add <i class="fas fa-add"></i></button>
             <input class="form-control action-control mr-sm-2" type="number" placeholder="start" max="{{selectedAction.end}}" ng-model="selectedAction.start">
-            <input class="form-control action-control mr-sm-2" type="number" placeholder="end" min="{{selectedAction.start}}" ng-model="selectedAction.end">
-            <button class="btn btn-dark mr-sm-2" type="submit" ng-click="removeAction()" ng-disabled="!selectedAction.end">Remove <i class="fas fa-remove"></i></button>
+            <input class="form-control action-control mr-sm-2" type="number" placeholder="end" min="{{selectedAction.start}}" ng-model="selectedAction.end"> -->
+            <button type="button" class="btn btn-primary mr-sm-2" data-toggle="modal" data-target="#codeModal">
+                Code
+            </button>
+            <!-- <button class="btn btn-dark mr-sm-2" type="submit" ng-click="removeAction()" ng-disabled="!selectedAction.end">Remove
+                <i class="fas fa-remove"></i>
+            </button> -->
         </form>
     </nav>
 
     <div class="body-content">
         <div class="container-fluid">
-            <div style="display: flex; margin-top: 56px;">
+            <div class="bar-indicator">
                 <div class="bar bar-numbered" ng-repeat="a in [].constructor(barCount) track by $index">
-                    <div class="badge badge-success badge-bar" ng-hide="$index%4"><span ng-bind="$index"></span></div>
+                    <div class="badge badge-success badge-bar" ng-hide="$index%4">
+                        <span ng-bind="$index"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="loop-indicator">
+                <div class="bar-loop-indicator" ng-repeat="a in [].constructor(16) track by $index">
+                    <div class="badge badge-success badge-loop">
+                        <span ng-bind="$index + 1"></span>
+                    </div>
                 </div>
             </div>
             <div class="loops-container">
@@ -45,7 +59,31 @@
             </div>
         </div>
     </div>
-
+    <!-- Modal -->
+    <div class="modal fade" id="codeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Send code to execute</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">Data:</label>
+                            <textarea class="form-control" rows="10" id="message-text" ng-model="dataToSend"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- lib -->
     <script src="scripts/lib/jquery-3.3.1.min.js"></script>
     <script src="scripts/lib/angular.min.js"></script>

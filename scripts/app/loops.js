@@ -12,6 +12,7 @@ strobeApp.controller('loopsController', ['$scope', function($scope) {
     $scope.loops = loops;
     $scope.barCount = barCount;
     $scope.selectedAction = {};
+    $scope.dataToSend = 'data to send to execute';
 
     $scope.selectAction = function(o, i) {
         if ($scope.selectedAction == o && $scope.selectedAction.loopIndex == i) {

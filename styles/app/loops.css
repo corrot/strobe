@@ -3,14 +3,32 @@
     top: 0;
     position: fixed;
     width: 100%;
-    z-index: 10000;
+    z-index: 10;
 }
 
 .loop {
-    height: calc( (100vh - 56px - 18px)/16);
+    height: calc( (100vh - 56px - 18px - 26px)/16);
     display: flex;
     justify-content: flex-start;
     position: relative;
+}
+
+.loop-indicator {
+    height: 100vh;
+    position: fixed;
+    z-index: 100;
+    overflow: hidden;
+    background: #333333;
+}
+
+.loops-container {
+    margin-left: 26px;
+}
+
+.bar-indicator {
+    display: flex;
+    margin-top: 56px;
+    margin-left: 26px;
 }
 
 .bar {
@@ -44,9 +62,20 @@
     border: 1px solid transparent;
 }
 
+.bar-loop-indicator {
+    float: none;
+    height: calc( (100vh - 56px - 18px - 26px)/16);
+}
+
 .badge-bar {
     position: relative;
-    transform: translateX(-50%)
+    transform: translateX(-50%);
+}
+
+.badge-loop {
+    position: relative;
+    transform: translateY(-70%);
+    top: 50%;
 }
 
 .action {
