@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html ng-app="strobeApp">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>loops</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- lib -->
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/lib/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/lib/fa-regular.min.css" />
+    <!-- app -->
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/app/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/app/loops.css" />
+</head>
+
+<body ng-controller="loopsController">
+    <nav class="navbar navbar-light bg-primary navbar-fixed">
+        <a class="navbar-brand" href="#">
+            <!-- <img src="/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">  -->
+            <strong>Strobe</strong>
+        </a>
+        <div style="display:flex">
+            <button class="btn btn-success mr-sm-0" type="submit" 
+            ng-show="selectedBar.loopIndex !== undefined"
+            ng-click="addAction()">Add <i class="fas fa-add"></i></button>
+            <input class="form-control action-control" type="number" placeholder="start" max="{{selectedAction.end}}" ng-model="selectedAction.start">
+            <input class="form-control action-control" type="number" placeholder="end" min="{{selectedAction.start}}" ng-model="selectedAction.end">
+            <button class="btn btn-dark mr-sm-2" type="submit" ng-click="removeAction()">Remove <i class="fas fa-remove"></i></button>
+        </div>
+        <form class="form-inline">
+            <button class="btn btn-dark mr-sm-2" type="submit">Pause All <i class="fas fa-pause"></i></button>
+            <button class="btn btn-danger mr-sm-0" type="submit">Stop All <i class="fas fa-stop"></i></button>
+        </form>
+    </nav>
+
+    <div class="body-content">
+        <div class="container-fluid">
+            <div class="loops-container">
+                <div class="loop" ng-repeat="loop in loops">
+                    <div class="bar"
+                        ng-repeat="bar in [].constructor(loop.barCount) track by $index"
+                        ng-click="selectBar($parent.$index, $index)"
+                        ng-class="{'active': $parent.$index == selectedBar.loopIndex && $index == selectedBar.barIndex}"></div>
+                    <div class="action" 
+                        ng-repeat="action in loop.data" 
+                        ng-class="{'active': action == selectedAction}"
+                        ng-style="{'left': action.start*64 + 'px', 'width': (action.end - action.start)*64 + 'px'}"
+                        ng-click="selectAction(action, $parent.$index)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- lib -->
+    <script src="scripts/lib/jquery-3.3.1.min.js"></script>
+    <script src="scripts/lib/angular.min.js"></script>
+    <script src="scripts/lib/bootstrap.min.js"></script>
+    <!-- app -->
+    <script src="scripts/app/main.js"></script>
+    <script src="scripts/app/loops.js"></script>
+</body>
+
+</html>

@@ -60,7 +60,4 @@ strobeApp.controller('strobeController', ['$scope', function($scope) {
             o.isSolo = false;
         }
     }
-
-
-
 }]);
