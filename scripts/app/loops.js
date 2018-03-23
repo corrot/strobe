@@ -1,49 +1,18 @@
-var loops = [{
-        barCount: 16,
-        data: [{
-                start: 0,
-                end: 1
-            },
-            {
-                start: 2,
-                end: 4
-            }
-        ]
-    },
-    {
-        barCount: 16,
-        data: [{
-                start: 1,
-                end: 2
-            },
-            {
-                start: 3,
-                end: 9
-            }
-        ]
-    },
-    {
-        barCount: 16,
-        data: [{
-                start: 0,
-                end: 1
-            },
-            {
-                start: 2,
-                end: 3
-            },
-            {
-                start: 4,
-                end: 7
-            }
-        ]
-    },
-];
+var barCount = 106;
+var loops = 
+function(){
+    var result = [];
+    for(var i = 0; i < 16; i++){
+        result.push([]);
+    }
+    return result;
+}();
 
 strobeApp.controller('loopsController', ['$scope', function($scope) {
     $scope.loops = loops;
-
+    $scope.barCount = barCount;
     $scope.selectedAction = {};
+   
     $scope.selectAction = function(o, i) {
         if ($scope.selectedAction == o && $scope.selectedAction.loopIndex == i) {
             $scope.selectedAction = {};
@@ -54,32 +23,83 @@ strobeApp.controller('loopsController', ['$scope', function($scope) {
         $scope.selectedBar = {};
     }
 
-    $scope.selectedBar = {};
-    $scope.selectBar = function(i, j) {
-        if ($scope.selectedBar.loopIndex == i && $scope.selectedBar.barIndex == j) {
-            $scope.selectedBar = {};
-        } else {
-            $scope.selectedBar = {
-                loopIndex: i,
-                barIndex: j
+    $scope.addAction = function(loopIndex, start, end) {
+        var loop = $scope.loops[loopIndex];
+        var cell = { start: start, end: end };
+        var isRedundant;
+        loop.forEach((c)=>{
+            if(c.start <= cell.start && c.end >= cell.end){
+                isRedundant = true;
+                return;
             }
-        }
-        $scope.selectedAction = {};
-    }
+        });
 
-    $scope.addAction = function() {
-        var o = { start: $scope.selectedBar.barIndex, end: $scope.selectedBar.barIndex + 1 };
-        $scope.loops[$scope.selectedBar.loopIndex].data.push(o);
-        $scope.selectAction(o, $scope.selectedBar.loopIndex);
+        if(isRedundant){
+            return;
+        }
+
+        var cellsToMerge = $.grep(loop, (o)=>{
+                if(o.end == cell.start || o.start == cell.end){
+                    return true;
+                }
+        });
+
+        if(cellsToMerge && cellsToMerge.length > 0){
+           cellsToMerge.forEach(c => {
+               if(c.end == cell.start){
+                   cell.start = c.start
+               }
+               else{
+                   cell.end = c.end;
+               }
+
+               loop.splice(loop.indexOf(c), 1)
+           });
+        }     
+
+        loop.push(cell);
+        $scope.selectAction(cell, loop.indexOf(cell));
     }
 
     $scope.removeAction = function() {
-        var i = $scope.loops[$scope.selectedAction.loopIndex].data.indexOf($scope.selectedAction);
-        $scope.loops[$scope.selectedAction.loopIndex].data.splice(i, 1);
+        var i = $scope.loops[$scope.selectedAction.loopIndex].indexOf($scope.selectedAction);
+        $scope.loops[$scope.selectedAction.loopIndex].splice(i, 1);
         $scope.selectedAction = {};
     }
 
     $scope.test = function() {
         console.log('resized!');
     }
+
+    // $scope.loops.forEach((l) => {
+    //     for (let index = 0; index < barCount; index++) {
+    //         if(Math.random()>.8){
+    //             $scope.addAction($scope.loops.indexOf(l), index, index + 1)
+    //         }        
+    //     }
+    // });
+
+    document.body.onmousedown = function() { 
+        $scope.isMouseClicked = true;
+      }
+
+      document.body.onmouseup = function() {
+        $scope.isMouseClicked = false;
+      }
 }]);
+
+document.addEventListener('keydown', (event) => {
+    if(event.key == 'Control')
+        ctrl = true;
+
+    if(event.key == 'Shift')
+        shift = true;
+});
+
+document.addEventListener('keydown', (event) => {
+    if(event.key == 'Control')
+        ctrl = false;
+
+    if(event.key == 'Shift')
+        shift = false;
+});

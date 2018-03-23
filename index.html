@@ -9,7 +9,6 @@
 
     <!-- lib -->
     <link rel="stylesheet" type="text/css" media="screen" href="styles/lib/bootstrap.min.css" />
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" type="text/css" media="screen" href="styles/lib/fa-regular.min.css" />
     <!-- app -->
     <link rel="stylesheet" type="text/css" media="screen" href="styles/app/main.css" />
@@ -34,8 +33,10 @@
         <div class="container-fluid">
             <div class="loops-container">
                 <div class="loop" ng-repeat="loop in loops">
-                    <div class="bar" ng-repeat="bar in [].constructor(loop.barCount) track by $index" ng-click="selectBar($parent.$index, $index)" ng-class="{'active': $parent.$index == selectedBar.loopIndex && $index == selectedBar.barIndex}"></div>
-                    <div class="action" on-resize="test()" ng-repeat="action in loop.data" ng-class="{'active': action == selectedAction}" ng-style="{'left': action.start*64 + 'px', 'width': (action.end - action.start)*64 + 'px'}" ng-click="selectAction(action, $parent.$index)"></div>
+                    <div class="bar" ng-repeat="bar in [].constructor(barCount) track by $index" ng-mousedown="addAction($parent.$index, $index, $index + 1)" 
+                    ng-mouseover="!isMouseClicked || addAction($parent.$index, $index, $index + 1)" 
+                    ng-class="{'active': $parent.$index == selectedBar.loopIndex && $index == selectedBar.barIndex}"></div>
+                    <div class="action" on-resize="test()" ng-repeat="action in loop" ng-class="{'active': action == selectedAction}" ng-style="{'left': action.start*64 + 'px', 'width': (action.end - action.start)*64 + 'px'}" ng-click="selectAction(action, $parent.$index)"></div>
                 </div>
             </div>
         </div>
@@ -43,7 +44,6 @@
 
     <!-- lib -->
     <script src="scripts/lib/jquery-3.3.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="scripts/lib/angular.min.js"></script>
     <script src="scripts/lib/bootstrap.min.js"></script>
     <!-- app -->
