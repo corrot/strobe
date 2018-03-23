@@ -25,18 +25,21 @@
             <input class="form-control action-control mr-sm-2" type="number" placeholder="start" max="{{selectedAction.end}}" ng-model="selectedAction.start">
             <input class="form-control action-control mr-sm-2" type="number" placeholder="end" min="{{selectedAction.start}}" ng-model="selectedAction.end">
             <button class="btn btn-dark mr-sm-2" type="submit" ng-click="removeAction()" ng-disabled="!selectedAction.end">Remove <i class="fas fa-remove"></i></button>
-            <button class="btn btn-dark mr-sm-2" type="submit" ng-click="removeAction()" ng-disabled="!selectedAction.end">Remove <i class="fas fa-remove"></i></button>
         </form>
     </nav>
 
     <div class="body-content">
         <div class="container-fluid">
+            <div style="display: flex; margin-top: 56px;">
+                <div class="bar bar-numbered" ng-repeat="a in [].constructor(barCount) track by $index">
+                    <div class="badge badge-success badge-bar" ng-hide="$index%4"><span ng-bind="$index"></span></div>
+                </div>
+            </div>
             <div class="loops-container">
                 <div class="loop" ng-repeat="loop in loops">
-                    <div class="bar" ng-repeat="bar in [].constructor(barCount) track by $index" ng-mousedown="addAction($parent.$index, $index, $index + 1)" 
-                    ng-mouseover="!isMouseClicked || addAction($parent.$index, $index, $index + 1)" 
-                    ng-class="{'active': $parent.$index == selectedBar.loopIndex && $index == selectedBar.barIndex}"></div>
-                    <div class="action" on-resize="test()" ng-repeat="action in loop" ng-class="{'active': action == selectedAction}" ng-style="{'left': action.start*64 + 'px', 'width': (action.end - action.start)*64 + 'px'}" ng-click="selectAction(action, $parent.$index)"></div>
+                    <div class="bar" ng-repeat="bar in [].constructor(barCount) track by $index" ng-mousedown="addAction($parent.$index, $index, $index + 1)" ng-mouseover="!isMouseClicked || addAction($parent.$index, $index, $index + 1)" ng-class="{'active': $parent.$index == selectedBar.loopIndex && $index == selectedBar.barIndex}"></div>
+                    <div class="action" on-resize="test()" ng-repeat="action in loop" ng-class="{'active': action == selectedAction}" ng-style="{'left': action.start*64 + 'px', 'width': (action.end - action.start)*64 + 'px'}" ng-click="selectAction(action, $parent.$index)"
+                        ng-right-click="removeAction(action, $parent.$index, $index)"></div>
                 </div>
             </div>
         </div>

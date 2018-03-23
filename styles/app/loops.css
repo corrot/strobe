@@ -6,13 +6,8 @@
     z-index: 10000;
 }
 
-.loops-container {
-    /* height: calc( 100vh - 56px ); */
-    margin-top: 56px;
-}
-
 .loop {
-    height: calc( (100vh - 56px)/16);
+    height: calc( (100vh - 56px - 18px)/16);
     display: flex;
     justify-content: flex-start;
     position: relative;
@@ -25,6 +20,16 @@
     display: block;
     background: #888;
     border: 1px solid #666;
+    float: left;
+}
+
+.bar:nth-child(4n) {
+    border-right-color: black;
+}
+
+.bar:nth-child(8n) {
+    border-right-color: black;
+    border-right-width: 2px;
 }
 
 .bar.active {
@@ -34,20 +39,32 @@
     border-color: #999;
 }
 
+.bar-numbered {
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+.badge-bar {
+    position: relative;
+    transform: translateX(-50%)
+}
+
 .action {
     position: absolute;
-    height: 2vh;
+    height: 100%;
     background: red;
     top: 50%;
+    width: 80%;
     transform: translateY(-50%);
     cursor: pointer;
     z-index: 11;
+    border: 5px solid #888;
+    box-shadow: 0 0 3px 1px #666;
 }
 
 .action.active {
     background: yellow;
     z-index: 12;
-    opacity: .55;
 }
 
 .action-control {
