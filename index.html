@@ -21,6 +21,7 @@
             <strong>Strobe</strong>
         </a>
         <form class="form-inline">
+            <input class="form-control action-control mr-sm-2" type="number" placeholder="bars" min="0" ng-model="barCount">
             <button class="btn btn-success mr-sm-2" type="submit" ng-disabled="selectedBar.loopIndex == undefined" ng-click="addAction()">Add <i class="fas fa-add"></i></button>
             <input class="form-control action-control mr-sm-2" type="number" placeholder="start" max="{{selectedAction.end}}" ng-model="selectedAction.start">
             <input class="form-control action-control mr-sm-2" type="number" placeholder="end" min="{{selectedAction.start}}" ng-model="selectedAction.end">
